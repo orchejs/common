@@ -1,0 +1,53 @@
+{
+  "name": "@orchejs/common",
+  "version": "0.1.0",
+  "description": "Orche - Common functionalities shared by the orchejs projects",
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "engines": {
+    "node": ">=6.9.0"
+  },
+  "scripts": {
+    "clean": "rm -rf ./build ./coverage .nyc_output",
+    "lint": "node_modules/.bin/tslint ./lib/**/*.ts ./test/**/*.ts",
+    "test": "node_modules/.bin/mocha",
+    "tsc": "node_modules/.bin/tsc --project tsconfig.json",
+    "post-compile": "cp package.json README.md ./build/validators",
+    "build": "npm run clean && npm run test && npm run tsc && npm run post-compile",
+    "coverage": "npm run clean && node_modules/.bin/nyc --reporter=lcov node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orchejs/common.git"
+  },
+  "keywords": [
+    "Orchejs",
+    "Common",
+    "Shared Functionalities"
+  ],
+  "author": {
+    "name": "Mauricio Gemelli Vigolo",
+    "email": "@mauriciovigolo"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orchejs/common/issues"
+  },
+  "homepage": "https://github.com/orchejs/common#readme",
+  "devDependencies": {
+    "@types/app-root-path": "^1.2.4",
+    "@types/chai": "^4.0.4",
+    "@types/node": "^8.0.31",
+    "@types/winston": "^2.3.6",
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.7.0",
+    "tslint-config-airbnb": "^5.3.0",
+    "typescript": "^2.5.2"
+  },
+  "dependencies": {
+    "@orchejs/validators": "^0.1.0",
+    "file-matcher": "^1.1.0"
+  }
+}
