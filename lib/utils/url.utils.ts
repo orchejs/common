@@ -1,6 +1,17 @@
-import { SortType } from '../constants/sort-type';
-import { SortField } from '../interfaces/sort-field';
+/**
+ * @license
+ * Copyright Mauricio Gemelli Vigolo. All Rights Reserved.
+ *
+ * Use of this source code is governed by a MIT-style license that can be
+ * found in the LICENSE file at https://github.com/orchejs/common/LICENSE
+ */
+import { SortType, SortField } from '../../';
 
+/**
+ * @class
+ * @description
+ * Utilities to deal with an URL.
+ */
 export class UrlUtils {
   /**
    * Sanitizes the url, in other words, this function includes the beginning slash
@@ -68,7 +79,7 @@ export class UrlUtils {
     const length = value.length - 1;
     const asc = value.indexOf('+');
     if (asc === 0 || asc === length) {
-      const val = value.replace(/(\+|\-)/g, '');
+      const val = value.replace(/(\+)/g, '');
       return {
         name: val,
         type: SortType.Asc

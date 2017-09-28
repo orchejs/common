@@ -9,7 +9,13 @@
 import { PropertyLoader } from '../loaders';
 import { PropertyDetails } from '../interfaces';
 
-export function property(details: string | PropertyDetails) {
+/**
+ * @description
+ * Decorator used to convert and validate the values of an object.
+ * 
+ * @param {string | PropertyDetails} details 
+ */
+export function Property(details: string | PropertyDetails) {
   return (target: any, propertyKey: string) => {
     let propertyDetails: PropertyDetails;
 

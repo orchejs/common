@@ -1,30 +1,36 @@
-import {
-  ParamDetails,
-  PropertyUnit,
-  PropertyDetails,
-  PropertyConfig,
-  BuildObjectResponse,
-  ValidatorError,
-  ValidatorDetails
-} from '../interfaces';
-import { ValidatorUtils, ClassUtils } from '../utils';
+/**
+ * @license
+ * Copyright Mauricio Gemelli Vigolo. All Rights Reserved.
+ *
+ * Use of this source code is governed by a MIT-style license that can be
+ * found in the LICENSE file at https://github.com/orchejs/common/LICENSE
+ */
+import { PropertyUnit, PropertyDetails, PropertyConfig, BuildObjectResponse } from '../interfaces';
 
+import { ClassUtils } from '../utils';
+import { ValidatorError, ValidatorDetails, ValidatorRunner } from '@orchejs/validators';
+
+/**
+ * @class
+ * @description
+ * Loader of Property decorators.
+ */
 export class PropertyLoader {
   private static propertyConfigs: PropertyConfig[] = [];
+  private static validatorRunner: ValidatorRunner = new ValidatorRunner();
 
   static addProperty(target: any, propertyKey: string, details: PropertyDetails) {
     const className = ClassUtils.getClassName(target.constructor);
     if (!className) {
       return;
     }
+
     const propertyUnit: PropertyUnit = {
       details,
       propertyKey
     };
 
-    let propertyConfig: PropertyConfig = this.propertyConfigs.find(
-      validator => validator.className === className
-    );
+    let propertyConfig = this.propertyConfigs.find(validator => validator.className === className);
 
     if (!propertyConfig) {
       propertyConfig = {
@@ -33,25 +39,35 @@ export class PropertyLoader {
       };
       this.propertyConfigs.push(propertyConfig);
     } else {
-      propertyConfig.units.push(propertyUnit);
+      propertyConfig.units!.push(propertyUnit);
     }
   }
 
   static getProperties(className: string): PropertyUnit[] {
-    const propertyConfig: PropertyConfig = this.propertyConfigs.find(
+    let properties: PropertyUnit[] = [];
+    const propertyConfig = this.propertyConfigs.find(
       validator => validator.className === className
     );
 
-    return propertyConfig.units;
+    if (propertyConfig) {
+      properties = propertyConfig.units!;
+    }
+
+    return properties;
   }
 
-  static loadPropertiesFromObject(value: any, param: ParamDetails): Promise<BuildObjectResponse> {
-    const clazz: object = param.type as object;
+  static loadPropertiesFromObject(value: any, clazz: object): Promise<BuildObjectResponse> {
     if (!clazz) {
-      return;
+      return Promise.reject('The clazz param must not be undefined.');
     }
+
     const className = ClassUtils.getClassName(clazz);
+    if (!className) {
+      return Promise.reject('The class name not found');
+    }
+    
     const propertyUnits: PropertyUnit[] = PropertyLoader.getProperties(className);
+
     return this.buildObject(value, clazz, propertyUnits);
   }
 
@@ -62,7 +78,6 @@ export class PropertyLoader {
   ): Promise<BuildObjectResponse> {
     let response: BuildObjectResponse;
     let validatorErrors: ValidatorError[] = [];
-
     return new Promise((resolve, reject) => {
       try {
         const object = Object.create(clazz);
@@ -75,16 +90,26 @@ export class PropertyLoader {
           const propValue = value[details.alias] || value[unit.propertyKey];
           object[unit.propertyKey] = propValue;
 
-          const validatorDetails: ValidatorDetails[] = details.validators;
-          if (validatorDetails) {
-            const errors: ValidatorError[] = await ValidatorUtils.runValidations(
-              propValue,
-              unit.propertyKey,
-              validatorDetails
-            );
+          const validatorDetails = details.validators;
 
-            if (errors) {
-              validatorErrors = validatorErrors.concat(errors);
+          if (validatorDetails) {
+            try {
+              const errors: ValidatorError[] = await this.validatorRunner.runValidations(
+                propValue,
+                unit.propertyKey,
+                validatorDetails
+              );
+  
+              if (errors && errors.length > 0) {
+                validatorErrors = validatorErrors.concat(errors);
+              }
+            } catch (error) {
+              validatorErrors.push({
+                fieldName: unit.propertyKey,
+                message: 'An exception happened during validator execution',
+                details: error.stack,
+                value: propValue
+              });
             }
           }
         });

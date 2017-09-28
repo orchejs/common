@@ -5,15 +5,16 @@
  * Use of this source code is governed by a MIT-style license that can be
  * found in the LICENSE file at https://github.com/orchejs/common/LICENSE
  */
-import { LogConsoleConfig, LogFileConfig } from './';
+import { SortType } from '../../';
 
 /**
  * @interface
  * @description
- * Options for the log initialization.
+ * Properties of a sort field, containg information about the field:
+ * - field name
+ * - SortType: asc or desc
  */
-export interface LogOptions {
-  disableLog?: boolean;
-  fileOptions?: LogFileConfig;
-  consoleOptions?: LogConsoleConfig;
+export interface SortField {
+  name: string;
+  type: SortType;
 }

@@ -1,12 +1,22 @@
-import * as winston from 'winston';
+/**
+ * @license
+ * Copyright Mauricio Gemelli Vigolo. All Rights Reserved.
+ *
+ * Use of this source code is governed by a MIT-style license that can be
+ * found in the LICENSE file at https://github.com/orchejs//LICENSE
+ */
+import * as fs from 'fs';
 import * as moment from 'moment';
 import * as path from 'path';
-import * as fs from 'fs';
+import * as winston from 'winston';
+import { PathUtils, Environment, LogOptions } from '../../';
 
-import { PathUtils } from './';
-import { Environment } from '../constants';
-import { LogOptions, OrcheRestConfig } from '../interfaces';
-
+/**
+ * @class
+ * @description
+ * Provides Log utilities for the orche projects and also for the applications that want to have
+ * a better logging control.
+ */
 export class LogUtils {
   private instance: any;
   private env: Environment;
@@ -17,9 +27,12 @@ export class LogUtils {
     this.init();
   }
 
-  public init(appConfig: OrcheRestConfig = {}): void {
-    const logOptions: LogOptions = appConfig.logOptions || {};
-    this.env = appConfig.environment || Environment.Development;
+  public init(
+    logOptions: LogOptions = {},
+    env: Environment = Environment.Development,
+    debug: boolean = false
+  ): void {
+    this.env = env;
 
     if (logOptions.disableLog) {
       return;
@@ -39,10 +52,10 @@ export class LogUtils {
      *  - if fileOptions was not informed and it's not production
      */
     if (
-      (this.env !== Environment.Production || appConfig.debug) &&
-      (appConfig.debug || logOptions.consoleOptions || !logOptions.fileOptions)
+      (this.env !== Environment.Production || debug) &&
+      (debug || logOptions.consoleOptions || !logOptions.fileOptions)
     ) {
-      logOptions.consoleOptions = this.loadConsoleOptions(logOptions.consoleOptions);
+      logOptions.consoleOptions = this.loadConsoleOptions(logOptions.consoleOptions!);
       const consoleTransport = new winston.transports.Console(logOptions.consoleOptions);
       this.transports.push(consoleTransport);
     }
@@ -53,7 +66,7 @@ export class LogUtils {
      *  - if fileOptions is defined
      */
     if (this.env === Environment.Production || logOptions.fileOptions) {
-      logOptions.fileOptions = this.loadFileOptions(logOptions.fileOptions);
+      logOptions.fileOptions = this.loadFileOptions(logOptions.fileOptions!);
       const fileTransport = new winston.transports.File(logOptions.fileOptions);
       this.transports.push(fileTransport);
     }
@@ -118,7 +131,7 @@ export class LogUtils {
     return options;
   }
 
-  private defaultFormatter(options): string {
+  private defaultFormatter(options: any): string {
     return (
       moment().format('YYYY-MM-DD HH:mm:sss') +
       ' - ' +
