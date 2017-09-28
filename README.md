@@ -7,7 +7,7 @@ Orchejs Common
 -------
 
 This module is used internally by other orchejs projects. Briefly it contains utilities classes,
-decorators and loaders that are shared between projects.
+decorators and loaders that are shared between the projects.
 
 -------
 ## Topics
