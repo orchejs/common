@@ -25,7 +25,7 @@ Missing an important feature? Please open an issue for discussion. If you want t
 
 - Clone the forked repository
 ```sh
-git clone https://github.com/YOUR-USERNAME/validators.git
+git clone https://github.com/YOUR-USERNAME/common.git
 ```
 
 - Install the dependencies
@@ -41,7 +41,7 @@ npm install
 
 Before submiting an issue, please search if there is an open issue for the same bug. A minimal reproduce scenario is necessary to help to understand the problem.
 
-For opening an issue, you can fill out this [issue form](https://github.com/orchejs/validators/issues/new).
+For opening an issue, you can fill out this [issue form](https://github.com/orchejs/common/issues/new).
 
 ### Submitting a Pull Request (PR)
 
@@ -108,9 +108,10 @@ Must be one of the following:
 
 ### Scope
 
-The scope to @orche/validators project should be used only for global and local validators. For the rest, in this project, there is no need to add the scope info.
-* **global:** global validators.
-* **local:** local validators.
+The scopes for @orche/common project are:.
+* **decorators**
+* **loaders**
+* **utils** 
 
 ### Subject
 
