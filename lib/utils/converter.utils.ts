@@ -28,7 +28,7 @@ export class ConverterUtils {
       return value;
     }
 
-    switch (type.name) {
+    switch (type) {
       case 'Number':
         val = +value;
         break;
@@ -46,10 +46,11 @@ export class ConverterUtils {
         break;
       case 'Array':
         if (typeof value === 'string') {
-          val = value.split(/(;|,|\s|\_)/ig);
+          val = value.split(/\;|\,/ig);
         } else {
           val = value;
         }
+        break;
       default:
         val = value;
     }

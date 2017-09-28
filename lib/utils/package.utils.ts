@@ -40,14 +40,14 @@ export class PackageUtils {
 
   public checkDependencyVersion(
     dependencyName: string,
-    versionToCheck: string
+    versionToCheck: string = ''
   ): 'eq' | 'lt' | 'gt' | undefined {
     const version = this.getDependencyVersion(dependencyName);
     if (!version) {
-      throw Error('Dependency not found');
+      throw new Error('Dependency not found');
     }
     if (!versionToCheck || versionToCheck.replace(/\D+/g, '') === '') {
-      throw Error(`Version cannot be null, undefined or blank and cannot have invalid characters
+      throw new Error(`Version cannot be null, undefined or blank and cannot have invalid characters
        other than dots and numbers.`);
     }
     if (version.replace(/\D+/g, '') === versionToCheck.replace(/\D+/g, '')) {
@@ -56,7 +56,7 @@ export class PackageUtils {
     const v1: string[] = version.replace(/[^0-9.]/g, '').split('.');
     const v2: string[] = versionToCheck.replace(/[^0-9.]/g, '').split('.');
     if (v2.length < 3) {
-      throw Error(`Version must be SEMVER compatible, so it should be composed by
+      throw new Error(`Version must be SEMVER compatible, so it should be composed by
        MAJOR.MINOR>PATCH.`);
     }
     let result: 'lt' | 'gt' | undefined;
