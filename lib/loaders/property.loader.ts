@@ -21,7 +21,7 @@ export class PropertyLoader {
 
   static addProperty(target: any, propertyKey: string, details: PropertyDetails) {
     const className = ClassUtils.getClassName(target.constructor);
-    if (!className) {
+    if (!className || className === 'Object') {
       return;
     }
 
@@ -65,7 +65,7 @@ export class PropertyLoader {
     if (!className) {
       return Promise.reject('The class name not found');
     }
-    
+
     const propertyUnits: PropertyUnit[] = PropertyLoader.getProperties(className);
 
     return this.buildObject(value, clazz, propertyUnits);
@@ -78,49 +78,46 @@ export class PropertyLoader {
   ): Promise<BuildObjectResponse> {
     let response: BuildObjectResponse;
     let validatorErrors: ValidatorError[] = [];
-    return new Promise((resolve, reject) => {
-      try {
-        const object = Object.create(clazz);
-        propertyUnits.forEach(async unit => {
-          const details = unit.details;
-          if (!details.alias) {
-            details.alias = unit.propertyKey;
-          }
+    return new Promise(async (resolve, reject) => {
+      const object = Object.create(clazz);
+      for (const unit of propertyUnits) {
+        const details = unit.details;
+        if (!details.alias) {
+          details.alias = unit.propertyKey;
+        }
 
-          const propValue = value[details.alias] || value[unit.propertyKey];
-          object[unit.propertyKey] = propValue;
+        const propValue = value[details.alias] || value[unit.propertyKey];
+        object[unit.propertyKey] = propValue;
 
-          const validatorDetails = details.validators;
+        const validatorDetails = details.validators;
 
-          if (validatorDetails) {
-            try {
-              const errors: ValidatorError[] = await this.validatorRunner.runValidations(
-                propValue,
-                unit.propertyKey,
-                validatorDetails
-              );
-  
-              if (errors && errors.length > 0) {
-                validatorErrors = validatorErrors.concat(errors);
-              }
-            } catch (error) {
-              validatorErrors.push({
-                fieldName: unit.propertyKey,
-                message: 'An exception happened during validator execution',
-                details: error.stack,
-                value: propValue
-              });
+        if (validatorDetails) {
+          try {
+            const errors: ValidatorError[] = await this.validatorRunner.runValidations(
+              propValue,
+              unit.propertyKey,
+              validatorDetails
+            );
+
+            if (errors && errors.length > 0) {
+              validatorErrors = validatorErrors.concat(errors);
             }
+          } catch (error) {
+            validatorErrors.push({
+              fieldName: unit.propertyKey,
+              message: 'An exception happened during validator execution',
+              details: error.stack,
+              value: propValue
+            });
           }
-        });
-        response = {
-          object,
-          validatorErrors
-        };
-        resolve(response);
-      } catch (error) {
-        reject('An error happened during object creation');
+        }
       }
+      
+      response = {
+        object,
+        validatorErrors
+      };
+      resolve(response);
     });
   }
 }
