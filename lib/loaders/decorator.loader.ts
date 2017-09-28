@@ -7,6 +7,7 @@
  */
 import { FileMatcher, FindOptions } from 'file-matcher';
 import { PathUtils } from '../utils';
+import * as path from 'path';
 
 /**
  * @class
@@ -26,7 +27,7 @@ export class DecoratorLoader {
    */
   loadDecorators(
     decoratorNames: string[],
-    directory: string = PathUtils.appRoot
+    directory?: string
   ): Promise<string[]> {
     return new Promise(async (resolve, reject) => {
       if (!decoratorNames || decoratorNames.length === 0) {
@@ -41,9 +42,14 @@ export class DecoratorLoader {
         'i'
       );
 
+      let dirToSearch: string = PathUtils.appRoot;
+      if (directory) {
+        dirToSearch = path.join(dirToSearch, directory);
+      }
+
       const fileMatcher = new FileMatcher();
       const criteria: FindOptions = {
-        path: PathUtils.appRoot,
+        path: dirToSearch,
         fileFilter: {
           fileNamePattern: [
             '**/*.js',
