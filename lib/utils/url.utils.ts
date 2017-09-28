@@ -19,7 +19,7 @@ export class UrlUtils {
    * 
    * @param url
    */
-  static urlSanitation(url: string): string {
+  static urlSanitation(url: string = ''): string {
     let finalUrl = url;
 
     if (!finalUrl || finalUrl.trim().length === 0) {
@@ -48,9 +48,9 @@ export class UrlUtils {
    * 
    * @param value 
    */
-  static getPathValue(value: string): any {
+  static getPathValue(value: string = ''): any {
     if (!value) {
-      return null;
+      return undefined;
     }
 
     let result: any;
