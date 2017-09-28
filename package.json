@@ -8,11 +8,11 @@
     "node": ">=6.9.0"
   },
   "scripts": {
-    "clean": "rm -rf ./build ./coverage .nyc_output",
+    "clean": "rm -rf ./build ./coverage .nyc_output ./log",
     "lint": "node_modules/.bin/tslint ./lib/**/*.ts ./test/**/*.ts",
     "test": "node_modules/.bin/mocha",
     "tsc": "node_modules/.bin/tsc --project tsconfig.json",
-    "post-compile": "cp package.json README.md ./build/validators",
+    "post-compile": "cp package.json README.md ./build/common",
     "build": "npm run clean && npm run test && npm run tsc && npm run post-compile",
     "coverage": "npm run clean && node_modules/.bin/nyc --reporter=lcov node_modules/.bin/mocha"
   },
@@ -37,10 +37,12 @@
   "devDependencies": {
     "@types/app-root-path": "^1.2.4",
     "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.31",
     "@types/winston": "^2.3.6",
     "chai": "^4.1.2",
     "mocha": "^3.5.3",
+    "nyc": "^11.2.1",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
     "tslint-config-airbnb": "^5.3.0",
@@ -48,7 +50,9 @@
   },
   "dependencies": {
     "@orchejs/validators": "^0.1.0",
+    "app-root-path": "^2.0.1",
     "file-matcher": "^1.1.0",
-    "moment": "^2.18.1"
+    "moment": "^2.18.1",
+    "winston": "^2.3.1"
   }
 }
