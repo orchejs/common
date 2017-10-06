@@ -42,6 +42,28 @@ describe('UrlUtils', () => {
     });
   });
 
+  describe('#transformToSpinalCase', () => {
+    it('Should return null if name is undefined', () => {
+      const result = UrlUtils.transformToSpinalCase(undefined);
+      expect(result).to.be.undefined;
+    });
+
+    it('Should return the same value if the text is not compound and it is lowercase', () => {
+      const result = UrlUtils.transformToSpinalCase('cars');
+      expect(result).to.be.equal('cars');
+    });
+
+    it('Should return the value in lowercase if there is any uppercase', () => {
+      const result = UrlUtils.transformToSpinalCase('Cars');
+      expect(result).to.be.equals('cars');
+    });
+
+    it('Should return the value in spinal-case if it is a compound name', () => {
+      const result = UrlUtils.transformToSpinalCase('TechCars');
+      expect(result).to.be.equal('tech-cars');
+    });
+  });
+
   describe('#getPathValue', () => {
     it('Should return null if the value param is undefined', () => {
       const result = UrlUtils.getPathValue(undefined);
