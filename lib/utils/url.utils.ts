@@ -41,6 +41,21 @@ export class UrlUtils {
   }
 
   /**
+   * Transforms a name in to spinal-case. The rule is, if it is a compound
+   * name, it will separate each uppercase letter into spinal.
+   * Example:
+   * - Before: ClassicalMusics - After: classical-musics
+   * 
+   * @param name name that will be transformed.
+   */
+  static transformToSpinalCase(name: string): string {
+    if (!name) {
+      return;
+    }
+    return name.replace(/(?!^)([A-Z])/g, ' $1').replace(/[_\s]+(?=[a-zA-Z])/g,'-').toLowerCase();
+  }
+
+  /**
    * Returns the value already in the correct way to be processed. 
    * If it corresponds to multiple values - separated by commas, this
    * function returns an array of values. Also deals with + or -, meaning
