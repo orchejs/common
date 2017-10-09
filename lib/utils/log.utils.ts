@@ -33,6 +33,7 @@ export class LogUtils {
     debug: boolean = false
   ): void {
     this.env = env;
+    this.instance = undefined;
 
     if (logOptions.disableLog) {
       return;
@@ -145,19 +146,19 @@ export class LogUtils {
   }
 
   info(msg: string, metadata?: any) {
-    this.instance.log('info', msg, metadata);
+    this.log('info', msg, metadata);
   }
 
   error(msg: string, metadata?: any) {
-    this.instance.log('error', msg, metadata);
+    this.log('error', msg, metadata);
   }
 
   warn(msg: string, metadata?: any) {
-    this.instance.log('warn', msg, metadata);
+    this.log('warn', msg, metadata);
   }
 
   debug(msg: string, metadata?: any) {
-    this.instance.log('debug', msg, metadata);
+    this.log('debug', msg, metadata);
   }
 
   customizeTransports(...transports: winston.TransportInstance[]): any {
@@ -170,6 +171,13 @@ export class LogUtils {
 
     this.transports = transports;
     this.instance = new winston.Logger({ transports: this.transports });
+  }
+
+  private log(level: string, msg: string, metadata: any) {
+    if (!this.instance) {
+      return;
+    }
+    this.instance.log(level, msg, metadata);
   }
 }
 
