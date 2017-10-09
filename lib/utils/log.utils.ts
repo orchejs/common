@@ -33,17 +33,17 @@ export class LogUtils {
     debug: boolean = false
   ): void {
     this.env = env;
-    this.instance = undefined;
-
-    if (logOptions.disableLog) {
-      return;
-    }
-
+    
     if (this.instance && this.transports && this.transports.length > 0) {
       this.transports.forEach((transport, index) => {
         this.instance.remove(transport);
         this.transports.splice(index, 1);
       });
+    }
+
+    if (logOptions.disableLog) {
+      this.instance = undefined;
+      return;
     }
 
     /**
