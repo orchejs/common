@@ -1,6 +1,6 @@
 {
   "name": "@orchejs/common",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Orche - Common functionalities shared by the orchejs projects",
   "main": "index.js",
   "typings": "index.d.ts",
