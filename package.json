@@ -1,6 +1,6 @@
 {
   "name": "@orchejs/common",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Orche - Common functionalities shared by the orchejs projects",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -39,7 +39,6 @@
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.31",
-    "@types/winston": "^2.3.6",
     "chai": "^4.1.2",
     "coveralls": "^2.13.2",
     "mocha": "^3.5.3",
@@ -50,6 +49,7 @@
     "typescript": "^2.5.2"
   },
   "dependencies": {
+    "@types/winston": "^2.3.6",
     "@orchejs/validators": "^0.1.0",
     "app-root-path": "^2.0.1",
     "file-matcher": "^1.1.0",
