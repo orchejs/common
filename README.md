@@ -12,9 +12,16 @@ decorators and loaders that are shared between the projects.
 -------
 ## Topics
 
+- [About Orchejs](#aoj)
 - [How to use it in Orchejs](#huo)
 - [Contributing](#con)
 - [License](#lic)
+
+## <a name="aoj"></a> About Orchejs
+
+The Orchejs project provides a set of libraries aggregating key technologies and consolidated libraries for the development of APIs in Node.js.
+
+The goal is to make the backend development in Node.js even more productive, organized and that promotes scalability and maintainability.
 
 ## <a name="huo"></a> How to use it in Orchejs
 
