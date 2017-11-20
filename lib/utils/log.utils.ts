@@ -33,7 +33,7 @@ export class LogUtils {
     debug: boolean = false
   ): void {
     this.env = env;
-    
+
     if (this.instance && this.transports && this.transports.length > 0) {
       this.transports.forEach((transport, index) => {
         this.instance.remove(transport);
@@ -83,6 +83,7 @@ export class LogUtils {
     const options: winston.ConsoleTransportOptions = consoleOptions || {};
     options.level = options.level || 'info';
     options.prettyPrint = options.prettyPrint || true;
+    options.colorize = true;
     options.handleExceptions = options.handleExceptions || true;
     options.humanReadableUnhandledException = options.humanReadableUnhandledException || true;
     options.formatter = options.formatter || this.defaultFormatter;
