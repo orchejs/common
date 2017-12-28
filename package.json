@@ -20,7 +20,11 @@
     "type": "git",
     "url": "git+https://github.com/orchejs/common.git"
   },
-  "keywords": ["Orchejs", "Common", "Shared Functionalities"],
+  "keywords": [
+    "Orchejs",
+    "Common",
+    "Shared Functionalities"
+  ],
   "author": {
     "name": "Mauricio Gemelli Vigolo",
     "email": "@mauriciovigolo"
@@ -35,6 +39,7 @@
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.31",
+    "@types/ramda": "^0.25.10",
     "chai": "^4.1.2",
     "coveralls": "^2.13.2",
     "mocha": "^3.5.3",
@@ -45,11 +50,12 @@
     "typescript": "^2.5.2"
   },
   "dependencies": {
-    "@types/winston": "^2.3.6",
     "@orchejs/validators": "^0.1.0",
+    "@types/winston": "^2.3.6",
     "app-root-path": "^2.0.1",
     "file-matcher": "^1.1.0",
     "moment": "^2.18.1",
+    "ramda": "^0.25.0",
     "winston": "^2.4.0"
   }
 }
