@@ -6,21 +6,19 @@
  * found in the LICENSE file at https://github.com/orchejs/common/LICENSE
  */
 import { expect } from 'chai';
-import { Property, DecoratorLoader, PropertyLoader } from '../../';
+import { property, loadDecorators, PropertyLoader } from '../../';
 
 class Student {
-  @Property({
+  @property({
     alias: 'alias'
   })
   _name: string;
-  @Property('email')
-  _email: string;
+  @property('email') _email: string;
 }
 
-describe('Property', () => {
+describe('property', () => {
   before(() => {
-    const decoratorLoader = new DecoratorLoader();
-    decoratorLoader.loadDecorators(['Property']);
+    loadDecorators(['property']);
   });
 
   describe('#convertToType', () => {

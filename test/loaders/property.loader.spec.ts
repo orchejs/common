@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/orchejs/common/LICENSE
  */
 import { expect } from 'chai';
-import { Property, PropertyLoader, DecoratorLoader } from '../../';
+import { property, PropertyLoader, loadDecorators } from '../../';
 import { EmailValidator, MaxValidator, MinValidator } from '@orchejs/validators';
 
 interface BoatSchema {
@@ -15,9 +15,8 @@ interface BoatSchema {
 const boatObject: BoatSchema = {};
 
 class Boat {
-  @Property('name') 
-  _name: string;
-  @Property({
+  @property('name') _name: string;
+  @property({
     validators: [
       {
         validator: EmailValidator
@@ -25,7 +24,7 @@ class Boat {
     ]
   })
   _email: string;
-  @Property({
+  @property({
     validators: [
       {
         validator: MinValidator
@@ -50,13 +49,11 @@ class Boat {
 }
 
 describe('PropertyLoader', () => {
-  let decoratorLoader: DecoratorLoader;
   let boat: Boat;
 
   before(() => {
     boat = new Boat('Cadilac', '@email.com', 'three');
-    decoratorLoader = new DecoratorLoader();
-    decoratorLoader.loadDecorators(['Property']);
+    loadDecorators(['property']);
   });
 
   describe('#addProperty', () => {

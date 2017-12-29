@@ -12,10 +12,10 @@ import { PropertyDetails } from '../interfaces';
 /**
  * @description
  * Decorator used to convert and validate the values of an object.
- * 
- * @param {string | PropertyDetails} details 
+ *
+ * @param {string | PropertyDetails} details
  */
-export function Property(details: string | PropertyDetails) {
+export function property(details: string | PropertyDetails) {
   return (target: any, propertyKey: string) => {
     let propertyDetails: PropertyDetails;
 
