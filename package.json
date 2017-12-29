@@ -1,6 +1,6 @@
 {
   "name": "@orchejs/common",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Orche - Common functionalities shared by the orchejs projects",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -20,11 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/orchejs/common.git"
   },
-  "keywords": [
-    "Orchejs",
-    "Common",
-    "Shared Functionalities"
-  ],
+  "keywords": ["Orchejs", "Common", "Shared Functionalities"],
   "author": {
     "name": "Mauricio Gemelli Vigolo",
     "email": "@mauriciovigolo"
