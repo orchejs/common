@@ -14,13 +14,19 @@
     "tsc": "node_modules/.bin/tsc --project tsconfig.json",
     "post-compile": "cp package.json README.md ./build/common",
     "build": "npm run clean && npm run test && npm run tsc && npm run post-compile",
-    "coverage": "npm run clean && node_modules/.bin/nyc --reporter=lcov node_modules/.bin/mocha"
+    "coverage": "npm run clean && node_modules/.bin/nyc --reporter=lcov node_modules/.bin/mocha",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/orchejs/common.git"
   },
-  "keywords": ["Orchejs", "Common", "Shared Functionalities"],
+  "keywords": [
+    "Orchejs",
+    "Common",
+    "Shared Functionalities"
+  ],
   "author": {
     "name": "Mauricio Gemelli Vigolo",
     "email": "@mauriciovigolo"
@@ -52,6 +58,8 @@
     "file-matcher": "^1.1.0",
     "moment": "^2.18.1",
     "ramda": "^0.25.0",
-    "winston": "^2.4.0"
-  }
+    "winston": "^2.4.0",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
