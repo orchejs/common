@@ -51,7 +51,7 @@
     "app-root-path": "^2.0.1",
     "file-matcher": "^1.1.0",
     "moment": "^2.18.1",
-    "ramda": "^0.25.0",
+    "ramda": "^0.27.2",
     "winston": "^2.4.0"
   }
 }
