@@ -52,6 +52,6 @@
     "file-matcher": "^1.1.0",
     "moment": "^2.18.1",
     "ramda": "^0.25.0",
-    "winston": "^2.4.0"
+    "winston": "^3.3.0"
   }
 }
